@@ -39,21 +39,21 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ env.VPS_HOST }}
-          username: ${{ env.VPS_USER }}
-          key: ${{ env.VPS_SSH_KEY }}
-          port: ${{ env.VPS_PORT || '22' }}
+          host: "$VPS_HOST"
+          username: "$VPS_USER"
+          key: "$VPS_SSH_KEY"
+          port: 22
           script: |
             set -e
             echo "🚀 Starting backend deployment..."
 
             # Navigate to app directory
-            cd ${{ env.APP_PATH }}
+            cd "$APP_PATH"
 
             # Create environment file
             cat > .env << 'EOF'
-            PORT=${{ env.PORT }}
-            MONGODB_URI=${{ env.MONGODB_URI }}
+            PORT="$PORT"
+            MONGODB_URI="$MONGODB_URI"
             EOF
 
             # Set proper permissions
@@ -71,7 +71,7 @@ jobs:
             fi
 
             # Restart PM2 process
-            pm2 restart ${{ env.PM2_APP_NAME }} || pm2 start ecosystem.config.js
+            pm2 restart "$PM2_APP_NAME" || pm2 start ecosystem.config.js
 
             # Save PM2 configuration
             pm2 save
