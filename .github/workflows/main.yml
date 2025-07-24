@@ -72,7 +72,7 @@ jobs:
             fi
 
             # Restart PM2 process
-            pm2 restart ${{ secrets.PM2_APP_NAME }} || pm2 start ecosystem.config.js
+            pm2 start ecosystem.config.js
 
             # Save PM2 configuration
             pm2 save
