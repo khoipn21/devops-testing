@@ -46,6 +46,7 @@ jobs:
               . "$HOME/.nvm/nvm.sh"
               # Download and install Node.js:
               nvm install 22
+              nvm use 22
             fi
 
             # Navigate to app directory
