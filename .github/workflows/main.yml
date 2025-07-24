@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "22"
           cache: "npm"
 
       - name: Install dependencies
@@ -39,21 +39,21 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: "$VPS_HOST"
-          username: "$VPS_USER"
-          key: "$VPS_SSH_KEY"
+          host: $VPS_HOST
+          username: $VPS_USER
+          key: $VPS_SSH_KEY
           port: 22
           script: |
             set -e
             echo "🚀 Starting backend deployment..."
 
             # Navigate to app directory
-            cd "$APP_PATH"
+            cd $APP_PATH
 
             # Create environment file
             cat > .env << 'EOF'
-            PORT="$PORT"
-            MONGODB_URI="$MONGODB_URI"
+            PORT=$PORT
+            MONGODB_URI=$MONGODB_URI
             EOF
 
             # Set proper permissions
@@ -71,7 +71,7 @@ jobs:
             fi
 
             # Restart PM2 process
-            pm2 restart "$PM2_APP_NAME" || pm2 start ecosystem.config.js
+            pm2 restart $PM2_APP_NAME || pm2 start ecosystem.config.js
 
             # Save PM2 configuration
             pm2 save
