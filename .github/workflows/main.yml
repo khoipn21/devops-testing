@@ -39,10 +39,10 @@ jobs:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: $VPS_HOST
-          username: $VPS_USER
-          key: $VPS_SSH_KEY
-          port: 22
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          port: ${{ secrets.VPS_PORT || '22' }}
           script: |
             set -e
             echo "🚀 Starting backend deployment..."
