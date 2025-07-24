@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/products", route);
 
 app.get("/", (req, res) => {
-	res.send("Hello World");
+	res.send("Hello World Testing 123");
 });
 
 mongoose
