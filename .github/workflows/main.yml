@@ -67,8 +67,42 @@ jobs:
             npm ci --production
 
             # Run database migrations if they exist
-            if [ -f "migrate.js" ]; then
-              npm run migrate
+            if grep -q '"type": "module"' package.json; then
+            echo "Creating ES module compatible ecosystem config..."
+            cat > ecosystem.config.cjs << 'EOF'
+            module.exports = {
+                apps: [{
+                name: 'backend-api',
+                script: './index.js',
+                instances: 1,
+                autorestart: true,
+                watch: false,
+                max_memory_restart: '1G',
+                env: {
+                  NODE_ENV: 'production',
+                  PORT: 3000
+                }
+              }]
+            }
+            EOF
+            else
+              echo "Creating CommonJS ecosystem config..."
+              cat > ecosystem.config.js << 'EOF'
+            module.exports = {
+              apps: [{
+                name: 'backend-api',
+                  script: './index.js',
+                instances: 1,
+                autorestart: true,
+                watch: false,
+                max_memory_restart: '1G',
+                env: {
+                  NODE_ENV: 'production',
+                  PORT: 3000
+                }
+              }]
+            }
+            EOF
             fi
 
             # Restart PM2 process
