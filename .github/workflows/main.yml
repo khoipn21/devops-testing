@@ -55,7 +55,7 @@ jobs:
             # Create environment file
             cat > .env << 'EOF'
             PORT=${{ secrets.PORT }}
-            MONGODB_URI=${{ secrets.MONGODB_URI }}
+            MONGO_URI=${{ secrets.MONGODB_URI }}
             EOF
 
             # Set proper permissions

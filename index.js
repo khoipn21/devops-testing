@@ -12,6 +12,10 @@ app.use(express.json());
 
 app.use("/api/products", route);
 
+app.get("/", (req, res) => {
+	res.send("Hello World");
+});
+
 mongoose
 	.connect(process.env.MONGO_URI)
 	.then(() => {
