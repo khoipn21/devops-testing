@@ -28,6 +28,16 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
     steps:
+      - name: Debug Secrets
+        run: |
+          echo "VPS_HOST: ${{ secrets.VPS_HOST != '' && 'SET' || 'NOT SET' }}"
+          echo "VPS_USER: ${{ secrets.VPS_USER != '' && 'SET' || 'NOT SET' }}"
+          echo "VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY != '' && 'SET' || 'NOT SET' }}"
+          echo "VPS_PORT: ${{ secrets.VPS_PORT != '' && 'SET' || 'NOT SET' }}"
+          echo "APP_PATH: ${{ secrets.APP_PATH != '' && 'SET' || 'NOT SET' }}"
+          echo "PORT: ${{ secrets.PORT != '' && 'SET' || 'NOT SET' }}"
+          echo "MONGODB_URI: ${{ secrets.MONGODB_URI != '' && 'SET' || 'NOT SET' }}"
+
       - name: Deploy to VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
